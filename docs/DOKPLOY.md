@@ -48,7 +48,7 @@ Nel pannello del registrar:
 | A | `www` | IP del server Dokploy |
 | A | `supabase` | IP del server Dokploy (per l'API di Supabase) |
 
-Se prima avevi impostato i record di GitHub Pages (185.199.108–111.153), toglili.
+Non usare i record di GitHub Pages (185.199.108–111.153): il sito ora è servito da Dokploy.
 
 ## 3. Servizio supabase
 

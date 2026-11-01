@@ -74,18 +74,16 @@ Le chiavi segrete restano solo sul server Supabase: nel sito c'è solo la chiave
 
 ## 4. Sito printbadge.com
 
-Il negozio si attiva quando il sito viene compilato con queste variabili (vedi [`.env.example`](../.env.example)):
+Su **Dokploy** imposti queste variabili nell'*Environment* del servizio WEB. Il container le legge all'avvio, quindi non serve ricompilare (vedi [DOKPLOY.md](DOKPLOY.md)):
 
 | Variabile | Valore |
 | --- | --- |
-| `VITE_SUPABASE_URL` | indirizzo pubblico del tuo Supabase |
-| `VITE_SUPABASE_ANON_KEY` | chiave **anon** (mai la service_role) |
-| `VITE_TERMS_URL` | pagina delle condizioni di vendita |
-| `VITE_PRIVACY_URL` | pagina dell'informativa privacy |
+| `SUPABASE_URL` | indirizzo pubblico del tuo Supabase |
+| `SUPABASE_ANON_KEY` | chiave **anon** (mai la service_role) |
+| `TERMS_URL` | pagina delle condizioni di vendita |
+| `PRIVACY_URL` | pagina dell'informativa privacy |
 
-Su GitHub: **Settings → Secrets and variables → Actions → Variables**. Il workflow di pubblicazione le usa già.
-
-Con **Dokploy/Docker** non servono al build: imposti `SUPABASE_URL`, `SUPABASE_ANON_KEY`, `TERMS_URL` e `PRIVACY_URL` nell'*Environment* del servizio WEB. Il container le legge all'avvio. Vedi [DOKPLOY.md](DOKPLOY.md).
+Se invece pubblichi la cartella `dist/` su un hosting statico, passa gli stessi valori al build con il prefisso `VITE_` (vedi [`.env.example`](../.env.example)).
 
 Senza queste variabili il sito resta un editor con stampa in proprio, senza negozio.
 

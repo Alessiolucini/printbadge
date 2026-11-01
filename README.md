@@ -72,16 +72,7 @@ Il progetto ha un [`Dockerfile`](Dockerfile):
 
 Guida passo per passo per il servizio WEB, il servizio supabase e i DNS: [docs/DOKPLOY.md](docs/DOKPLOY.md).
 
-## In alternativa: Pubblicazione su GitHub Pages con il dominio printbadge.com
-
-1. Crea un repository su GitHub (per esempio `printbadge`) e carica il progetto sul ramo `main`.
-2. In **Settings → Pages** scegli **Source: GitHub Actions**. Il workflow [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) compila e pubblica a ogni push su `main`.
-3. Nel DNS di `printbadge.com` (pannello del registrar) aggiungi:
-   - quattro record `A` per `@` verso `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`;
-   - un record `CNAME` per `www` verso `<tuo-utente>.github.io`.
-4. Torna in **Settings → Pages**, scrivi `printbadge.com` in *Custom domain*, salva e attiva **Enforce HTTPS** quando il certificato è pronto.
-
-In alternativa il progetto funziona senza modifiche su Vercel, Netlify o Cloudflare Pages (comando `npm run build`, cartella `dist`).
+Senza Docker, `npm run build` produce un sito statico in `dist/` da caricare su qualsiasi hosting. In quel caso le variabili del negozio vanno passate al build come `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`, `VITE_TERMS_URL` e `VITE_PRIVACY_URL` (vedi [`.env.example`](.env.example)).
 
 ## Struttura
 
