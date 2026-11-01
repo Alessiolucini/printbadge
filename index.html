@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PRINTBADGE.COM — Crea e stampa badge su qualsiasi stampante</title>
+  <meta name="description" content="Crea badge, pass per eventi e tessere in pochi minuti e stampali su qualsiasi stampante: card printer Evolis, Zebra, HID Fargo, Entrust, Magicard, stampanti di etichette o una normale stampante A4. Gratis, nel browser." />
+  <meta name="theme-color" content="#0B1D51" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="PRINTBADGE.COM" />
+  <meta property="og:title" content="PRINTBADGE.COM — Design. Print. Badge." />
+  <meta property="og:description" content="Badge, name tag e tessere per qualsiasi stampante. Gratis, nel browser." />
+  <meta property="og:url" content="https://printbadge.com/" />
+  <meta property="og:image" content="https://printbadge.com/brand/og.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" href="./icons/icon-32.png" sizes="32x32" type="image/png" />
+  <link rel="icon" href="./icons/icon-64.png" sizes="64x64" type="image/png" />
+  <link rel="apple-touch-icon" href="./icons/icon-180.png" />
+  <link rel="manifest" href="./manifest.webmanifest" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Montserrat:ital,wght@0,400;0,600;0,700;0,800;0,900;1,400&family=Oswald:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Roboto:ital,wght@0,400;0,700;1,400&family=Roboto+Mono:wght@400;700&family=Lato:ital,wght@0,400;0,900;1,400&family=Poppins:ital,wght@0,400;0,600;0,800;1,400&display=swap" rel="stylesheet" />
+</head>
+<body data-view="design">
+  <header class="topbar">
+    <button class="brand" id="btnHome" type="button" aria-label="PRINTBADGE.COM — Home">
+      <img src="./brand/logo-mark.webp" alt="" width="36" height="36" />
+      <span class="wordmark">PRINTBADGE<b>.COM</b></span>
+    </button>
+
+    <nav class="steps" aria-label="Passaggi">
+      <button class="step" data-step="design" type="button"><span class="step-n">1</span><span class="step-l" data-i18n="stepDesign">Progetta</span></button>
+      <span class="step-line" aria-hidden="true"></span>
+      <button class="step" data-step="people" type="button"><span class="step-n">2</span><span class="step-l" data-i18n="stepPeople">Persone</span><span class="step-count" id="peopleCount" hidden></span></button>
+      <span class="step-line" aria-hidden="true"></span>
+      <button class="step" data-step="print" type="button"><span class="step-n">3</span><span class="step-l" data-i18n="stepPrint">Stampa</span></button>
+    </nav>
+
+    <div class="tb-right">
+      <div class="tb-group" id="historyGroup">
+        <button class="tb-icon" id="btnUndo" data-i18n-title="undo" type="button"><i data-lucide="undo-2"></i></button>
+        <button class="tb-icon" id="btnRedo" data-i18n-title="redo" type="button"><i data-lucide="redo-2"></i></button>
+      </div>
+      <div class="menu-wrap">
+        <button class="tb-btn" id="btnFile" type="button" aria-haspopup="menu"><i data-lucide="folder-open"></i><span data-i18n="file">File</span></button>
+        <div class="menu" id="fileMenu" role="menu" hidden>
+          <button role="menuitem" type="button" data-action="new"><i data-lucide="layout-template"></i><span data-i18n="newFromTemplate">Nuovo da modello</span></button>
+          <button role="menuitem" type="button" data-action="open"><i data-lucide="folder-open"></i><span data-i18n="openProject">Apri progetto…</span></button>
+          <button role="menuitem" type="button" data-action="save"><i data-lucide="save"></i><span data-i18n="saveProject">Salva progetto</span><kbd>⌘S</kbd></button>
+        </div>
+      </div>
+      <label class="lang" data-i18n-title="language">
+        <i data-lucide="globe"></i>
+        <select id="langSelect">
+          <option value="it">IT</option>
+          <option value="en">EN</option>
+        </select>
+      </label>
+      <button class="btn-main" id="btnNext" type="button"><span id="btnNextLabel">Avanti</span><i data-lucide="arrow-right"></i></button>
+    </div>
+    <input type="file" id="fileOpen" accept=".printbadge,.json,application/json" hidden />
+  </header>
+
+  <main class="views">
+    <section class="view view-home" id="viewHome" hidden></section>
+
+    <section class="view view-design" id="viewDesign">
+      <nav class="toolrail" aria-label="Aggiungi">
+        <p class="rail-title" data-i18n="add">Aggiungi</p>
+        <button class="tool" data-tool="text" type="button"><span class="tool-ic"><i data-lucide="type"></i></span><span data-i18n="toolText">Testo</span></button>
+        <button class="tool" data-tool="field" type="button"><span class="tool-ic"><i data-lucide="braces"></i></span><span data-i18n="toolField">Campo</span></button>
+        <button class="tool" data-tool="photo" type="button"><span class="tool-ic"><i data-lucide="user-round"></i></span><span data-i18n="toolPhoto">Foto</span></button>
+        <button class="tool" data-tool="logo" type="button"><span class="tool-ic"><i data-lucide="image"></i></span><span data-i18n="toolLogo">Logo</span></button>
+        <button class="tool" data-tool="qrcode" type="button"><span class="tool-ic"><i data-lucide="qr-code"></i></span><span data-i18n="toolQr">QR</span></button>
+        <button class="tool" data-tool="barcode" type="button"><span class="tool-ic"><i data-lucide="barcode"></i></span><span data-i18n="toolBarcode">Barcode</span></button>
+        <button class="tool" data-tool="shapes" type="button"><span class="tool-ic"><i data-lucide="shapes"></i></span><span data-i18n="toolShapes">Forme</span></button>
+        <button class="tool" data-tool="camera" type="button"><span class="tool-ic"><i data-lucide="camera"></i></span><span data-i18n="toolCamera">Webcam</span></button>
+        <input type="file" id="fileImage" accept="image/*" hidden />
+      </nav>
+
+      <section class="stage" id="stage">
+        <div class="stage-top">
+          <div class="seg" id="sideSwitch" role="tablist">
+            <button class="seg-btn active" data-side="front" role="tab" type="button" data-i18n="front">Fronte</button>
+            <button class="seg-btn" data-side="back" role="tab" type="button" data-i18n="back">Retro</button>
+          </div>
+        </div>
+        <div class="stage-scroll" id="stageScroll">
+          <div class="card-holder" id="cardHolder">
+            <div class="side-pane" id="paneFront"><canvas id="canvasFront"></canvas></div>
+            <div class="side-pane" id="paneBack" hidden><canvas id="canvasBack"></canvas></div>
+            <svg class="card-overlay" id="cardOverlay" aria-hidden="true"></svg>
+            <img class="merge-preview" id="mergePreview" alt="" hidden />
+            <div class="quickbar" id="quickbar" hidden></div>
+          </div>
+        </div>
+        <footer class="stage-bar">
+          <span class="chip" id="formatChip">CR80</span>
+          <label class="check"><input type="checkbox" id="toggleSafe" checked /> <span data-i18n="safeArea">Area sicura</span></label>
+          <label class="check"><input type="checkbox" id="toggleSnap" checked /> <span data-i18n="snap">Aggancio</span></label>
+          <div class="tb-spacer"></div>
+          <div class="record-nav" id="recordNav" hidden>
+            <label class="check"><input type="checkbox" id="togglePreview" /> <span data-i18n="previewData">Anteprima con i dati</span></label>
+            <button class="tb-icon sm" id="btnPrevRec" type="button"><i data-lucide="chevron-left"></i></button>
+            <span id="recordLabel">1 / 1</span>
+            <button class="tb-icon sm" id="btnNextRec" type="button"><i data-lucide="chevron-right"></i></button>
+          </div>
+          <div class="zoom">
+            <button class="tb-icon sm" id="btnZoomOut" data-i18n-title="zoomOut" type="button"><i data-lucide="zoom-out"></i></button>
+            <button class="tb-zoom" id="btnZoomFit" data-i18n-title="zoomFit" type="button">100%</button>
+            <button class="tb-icon sm" id="btnZoomIn" data-i18n-title="zoomIn" type="button"><i data-lucide="zoom-in"></i></button>
+          </div>
+        </footer>
+      </section>
+
+      <aside class="panel">
+        <div class="tabs" role="tablist">
+          <button class="tab active" data-tab="props" type="button"><i data-lucide="sliders-horizontal"></i><span data-i18n="tabProps">Modifica</span></button>
+          <button class="tab" data-tab="layers" type="button"><i data-lucide="layers"></i><span data-i18n="tabLayers">Livelli</span></button>
+        </div>
+        <div class="tab-body" id="tab-props"></div>
+        <div class="tab-body" id="tab-layers" hidden></div>
+      </aside>
+    </section>
+
+    <section class="view view-people" id="viewPeople" hidden></section>
+    <section class="view view-print" id="viewPrint" hidden></section>
+    <section class="view view-order" id="viewOrder" hidden></section>
+  </main>
+
+  <dialog class="modal" id="dlgCamera">
+    <header class="modal-head">
+      <h2 data-i18n="cameraTitle">Scatta una foto</h2>
+      <button class="tb-icon" data-close type="button"><i data-lucide="x"></i></button>
+    </header>
+    <div class="camera-box">
+      <video id="cameraVideo" autoplay playsinline muted></video>
+      <div class="camera-frame" aria-hidden="true"></div>
+    </div>
+    <footer class="modal-foot">
+      <span class="muted" data-i18n="cameraHint">La foto va nel segnaposto selezionato o diventa una nuova foto.</span>
+      <button class="btn-main" id="btnShoot" type="button"><i data-lucide="camera"></i><span data-i18n="shoot">Scatta</span></button>
+    </footer>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

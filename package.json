@@ -1,0 +1,25 @@
+{
+  "name": "print-badge",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Print Badge – editor di badge e tessere che stampa su qualsiasi stampante (card printer, etichette, fogli A4).",
+  "type": "module",
+  "license": "MIT",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.118.0",
+    "bwip-js": "^4.11.4",
+    "fabric": "^7.4.0",
+    "jspdf": "^4.2.1",
+    "lucide": "^1.66.0",
+    "papaparse": "^5.7.0",
+    "read-excel-file": "^9.3.14"
+  },
+  "devDependencies": {
+    "vite": "^8.3.5"
+  }
+}

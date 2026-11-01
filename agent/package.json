@@ -1,0 +1,17 @@
+{
+  "name": "printbadge-agent",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Agente di stampa PRINTBADGE.COM: stampa automaticamente gli ordini pagati.",
+  "type": "module",
+  "license": "MIT",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "start": "node --env-file=.env printbadge-agent.mjs",
+    "once": "node --env-file=.env printbadge-agent.mjs --once",
+    "printers": "node --env-file=.env printbadge-agent.mjs --printers"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.118.0"
+  }
+}
