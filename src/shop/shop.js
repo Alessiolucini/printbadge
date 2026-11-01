@@ -1,15 +1,18 @@
 import { createClient } from '@supabase/supabase-js';
 import { quote, unitPriceCents } from '../../supabase/functions/_shared/pricing.js';
 
-// Il negozio si attiva solo se il sito è compilato con l'indirizzo e la chiave pubblica (anon)
-// di Supabase: senza, l'app resta un editor con stampa in proprio.
-const URL_ = import.meta.env.VITE_SUPABASE_URL;
-const ANON = import.meta.env.VITE_SUPABASE_ANON_KEY;
+// Il negozio si attiva solo se il sito conosce l'indirizzo e la chiave pubblica (anon) di Supabase:
+// senza, l'app resta un editor con stampa in proprio.
+// Prima si guarda config.js (scritto all'avvio del container Docker dalle variabili d'ambiente),
+// poi le variabili VITE_* fissate al momento del build.
+const runtime = window.PRINTBADGE_CONFIG || {};
+const URL_ = runtime.supabaseUrl || import.meta.env.VITE_SUPABASE_URL;
+const ANON = runtime.supabaseAnonKey || import.meta.env.VITE_SUPABASE_ANON_KEY;
 
 export const shopEnabled = Boolean(URL_ && ANON);
 export const legalLinks = {
-  terms: import.meta.env.VITE_TERMS_URL || '',
-  privacy: import.meta.env.VITE_PRIVACY_URL || '',
+  terms: runtime.termsUrl || import.meta.env.VITE_TERMS_URL || '',
+  privacy: runtime.privacyUrl || import.meta.env.VITE_PRIVACY_URL || '',
 };
 
 let client = null;

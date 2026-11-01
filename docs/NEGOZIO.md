@@ -85,6 +85,8 @@ Il negozio si attiva quando il sito viene compilato con queste variabili (vedi [
 
 Su GitHub: **Settings → Secrets and variables → Actions → Variables**. Il workflow di pubblicazione le usa già.
 
+Con **Dokploy/Docker** non servono al build: imposti `SUPABASE_URL`, `SUPABASE_ANON_KEY`, `TERMS_URL` e `PRIVACY_URL` nell'*Environment* del servizio WEB. Il container le legge all'avvio. Vedi [DOKPLOY.md](DOKPLOY.md).
+
 Senza queste variabili il sito resta un editor con stampa in proprio, senza negozio.
 
 ## 5. Agente di stampa (computer in ufficio)

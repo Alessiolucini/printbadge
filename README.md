@@ -63,7 +63,16 @@ npm run build
 
 Il risultato è nella cartella `dist/`: un sito statico pubblicabile su qualsiasi hosting.
 
-## Pubblicazione su GitHub Pages con il dominio printbadge.com
+## Pubblicazione su Dokploy (consigliata con Supabase self-hosted)
+
+Il progetto ha un [`Dockerfile`](Dockerfile):
+- compila il sito con Node;
+- lo serve con Nginx sulla porta 80;
+- legge `SUPABASE_URL`, `SUPABASE_ANON_KEY`, `TERMS_URL` e `PRIVACY_URL` all'avvio del container.
+
+Guida passo per passo per il servizio WEB, il servizio supabase e i DNS: [docs/DOKPLOY.md](docs/DOKPLOY.md).
+
+## In alternativa: Pubblicazione su GitHub Pages con il dominio printbadge.com
 
 1. Crea un repository su GitHub (per esempio `printbadge`) e carica il progetto sul ramo `main`.
 2. In **Settings → Pages** scegli **Source: GitHub Actions**. Il workflow [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) compila e pubblica a ogni push su `main`.
@@ -81,6 +90,8 @@ supabase/
   migrations/          tabelle, sicurezza, coda di stampa, catalogo di esempio
   functions/           create-checkout, stripe-webhook, prezzi condivisi
 agent/                 agente di stampa per il computer in ufficio
+docker/                configurazione Nginx e script di avvio del container
+Dockerfile             immagine del sito per Dokploy
 src/
   main.js              avvio, passi Progetta → Persone → Stampa, menu e scorciatoie
   editor/editor.js     editor su canvas (Fabric.js): oggetti, livelli, cronologia, salvataggio
