@@ -2,7 +2,7 @@
   "name": "print-badge",
   "version": "1.0.0",
   "private": true,
-  "description": "Print Badge – editor di badge e tessere che stampa su qualsiasi stampante (card printer, etichette, fogli A4).",
+  "description": "BadgeOK – crea il badge online: appena ordini viene stampato e spedito subito. Stampa anche su qualsiasi stampante (card printer, etichette, fogli A4).",
   "type": "module",
   "license": "MIT",
   "scripts": {

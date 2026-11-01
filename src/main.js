@@ -51,7 +51,7 @@ const VIEWS = ['home', 'design', 'people', 'print', 'order'];
 let view = 'design';
 let printApi = null;
 let orderApi = null;
-// Passo 3: "order" = ordina la stampa a PRINTBADGE.COM, "self" = stampa con la propria stampante.
+// Passo 3: "order" = ordina la stampa a BadgeOK, "self" = stampa con la propria stampante.
 let printMode = shopEnabled ? 'order' : 'self';
 let orderResult = null;
 
@@ -495,7 +495,7 @@ fileMenu.addEventListener('click', (e) => {
 // ------------------------------------------------------------------ salva / apri
 function saveProject() {
   const blob = new Blob([JSON.stringify({ ...editor.serialize(), data: serializeData(true) })], { type: 'application/json' });
-  download(blob, `badge-${new Date().toISOString().slice(0, 10)}.printbadge`);
+  download(blob, `badge-${new Date().toISOString().slice(0, 10)}.badgeok`);
   toast(t('saved'));
 }
 
@@ -636,7 +636,7 @@ document.addEventListener('drop', async (e) => {
       } catch {
         toast(t('importError'), 'error');
       }
-    } else if (/\.(printbadge|json)$/.test(name)) await openProjectFile(file);
+    } else if (/\.(badgeok|printbadge|json)$/.test(name)) await openProjectFile(file);
   }
 });
 

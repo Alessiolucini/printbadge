@@ -9,7 +9,7 @@ import {
   AlignStartHorizontal, AlignCenterHorizontal, AlignEndHorizontal, BringToFront, SendToBack,
   RectangleHorizontal, RectangleVertical, FileDown, ShieldCheck, Ruler,
   ArrowRight, ArrowLeft, Shapes, Users, Sparkles, Search, CircleCheck, Zap, Palette, AArrowUp, AArrowDown,
-  Pencil, RotateCcw, Tag, CloudOff,
+  Pencil, RotateCcw, Tag, CloudOff, Truck,
 } from 'lucide';
 
 const ICONS = {
@@ -32,6 +32,7 @@ const ICONS = {
   'arrow-right': ArrowRight, 'arrow-left': ArrowLeft, 'shapes': Shapes, 'users': Users, 'sparkles': Sparkles,
   'search': Search, 'check-circle': CircleCheck, 'zap': Zap, 'palette': Palette, 'font-up': AArrowUp,
   'font-down': AArrowDown, 'pencil': Pencil, 'rotate-ccw': RotateCcw, 'tag': Tag, 'offline': CloudOff,
+  'truck': Truck,
 };
 
 export function icon(name, size = 18) {

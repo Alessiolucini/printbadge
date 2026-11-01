@@ -110,7 +110,7 @@ export function calibrationCanvas(doc, dpi = 300) {
   g.textAlign = 'center';
   g.fillText('▲ TOP', (w / 2) * k, 8 * k);
   g.font = `${1.8 * k}px Inter, Arial, sans-serif`;
-  g.fillText(`Print Badge · ${w.toFixed(1)} × ${h.toFixed(1)} mm · ${dpi} dpi`, (w / 2) * k, (h - 6) * k);
+  g.fillText(`BadgeOK · ${w.toFixed(1)} × ${h.toFixed(1)} mm · ${dpi} dpi`, (w / 2) * k, (h - 6) * k);
   g.fillText('Bordo continuo = 1 mm · tratteggio = 3 mm', (w / 2) * k, (h - 3.8) * k);
   return c;
 }

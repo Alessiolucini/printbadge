@@ -52,7 +52,7 @@ export function renderHome({ root, lang, current, actions }) {
   const templatesRef = h('section', { id: 'templates' });
   const hero = h('section', { class: 'hero' },
     h('div', {},
-      h('span', { class: 'eyebrow', text: 'PRINTBADGE.COM' }),
+      h('span', { class: 'eyebrow', text: 'BADGEOK.COM' }),
       h('h1', { html: t('homeTitle') }),
       h('p', { class: 'lead', text: t('homeLead') }),
       h('div', { class: 'hero-actions' },
@@ -61,12 +61,12 @@ export function renderHome({ root, lang, current, actions }) {
         h('button', { class: 'btn lg', type: 'button', onclick: actions.openFile }, h('i', { 'data-lucide': 'folder-open' }), t('openProject')),
       ),
       h('div', { class: 'trust' },
-        h('span', {}, h('i', { 'data-lucide': 'check-circle', 'data-size': '16' }), t('trustFree')),
-        h('span', {}, h('i', { 'data-lucide': 'printer', 'data-size': '16' }), t('trustPrinters')),
-        h('span', {}, h('i', { 'data-lucide': 'shield', 'data-size': '16' }), t('trustPrivacy')),
+        h('span', {}, h('i', { 'data-lucide': 'zap', 'data-size': '16' }), t('trust1')),
+        h('span', {}, h('i', { 'data-lucide': 'truck', 'data-size': '16' }), t('trust2')),
+        h('span', {}, h('i', { 'data-lucide': 'shield', 'data-size': '16' }), t('trust3')),
       ),
     ),
-    h('div', { class: 'hero-art' }, h('img', { src: './brand/hero.webp', alt: '', width: 1400, height: 1045, fetchpriority: 'high' })),
+    h('div', { class: 'hero-art' }, h('img', { src: './brand/hero.webp', alt: '', width: 1600, height: 513, fetchpriority: 'high' })),
   );
 
   const cont = current
@@ -77,11 +77,16 @@ export function renderHome({ root, lang, current, actions }) {
     )
     : null;
 
-  const how = h('section', { class: 'how' },
-    [1, 2, 3].map((n) => h('div', { class: 'how-card' },
-      h('span', { class: 'how-n', text: String(n) }),
-      h('div', {}, h('h3', { text: t(`how${n}Title`) }), h('p', { text: t(`how${n}Text`) })),
-    )),
+  // Cosa succede dopo l'ordine: stampa immediata e spedizione.
+  const flow = h('section', { class: 'flow' },
+    h('div', { class: 'section-head' }, h('div', {}, h('h2', { text: t('flowTitle') }), h('p', { text: t('flowSub') }))),
+    h('div', { class: 'flow-steps' },
+      ['order', 'print', 'ship'].map((name, i) => h('div', { class: 'flow-step' },
+        h('img', { src: `./brand/flow-${name}.webp`, alt: '', width: 190, height: 130, loading: 'lazy' }),
+        h('h3', { text: t(`flow${i + 1}Title`) }),
+        h('p', { text: t(`flow${i + 1}Text`) }),
+      )),
+    ),
   );
 
   const grid = h('div', { class: 'tpl-grid' });
@@ -106,6 +111,6 @@ export function renderHome({ root, lang, current, actions }) {
     grid,
   );
 
-  root.append(h('div', { class: 'home' }, hero, how, cont, templatesRef));
+  root.append(h('div', { class: 'home' }, hero, flow, cont, templatesRef));
   paintIcons(root);
 }

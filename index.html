@@ -3,15 +3,15 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>PRINTBADGE.COM — Crea e stampa badge su qualsiasi stampante</title>
-  <meta name="description" content="Crea badge, pass per eventi e tessere in pochi minuti e stampali su qualsiasi stampante: card printer Evolis, Zebra, HID Fargo, Entrust, Magicard, stampanti di etichette o una normale stampante A4. Gratis, nel browser." />
-  <meta name="theme-color" content="#0B1D51" />
+  <title>BadgeOK — Il tuo badge, stampato e spedito subito</title>
+  <meta name="description" content="Crea online il tuo badge, pass per eventi o tessera: appena ordini lo stampiamo subito su card in PVC e te lo spediamo. Oppure stampalo con la tua stampante. Disponibile in italiano, inglese, spagnolo, francese e tedesco." />
+  <meta name="theme-color" content="#08204F" />
   <meta property="og:type" content="website" />
-  <meta property="og:site_name" content="PRINTBADGE.COM" />
-  <meta property="og:title" content="PRINTBADGE.COM — Design. Print. Badge." />
-  <meta property="og:description" content="Badge, name tag e tessere per qualsiasi stampante. Gratis, nel browser." />
-  <meta property="og:url" content="https://printbadge.com/" />
-  <meta property="og:image" content="https://printbadge.com/brand/og.jpg" />
+  <meta property="og:site_name" content="BadgeOK" />
+  <meta property="og:title" content="BadgeOK — Il tuo badge, stampato e spedito subito" />
+  <meta property="og:description" content="Crea il badge online: appena ordini lo stampiamo e lo spediamo subito." />
+  <meta property="og:url" content="https://badgeok.com/" />
+  <meta property="og:image" content="https://badgeok.com/brand/og.jpg" />
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="icon" href="./icons/icon-32.png" sizes="32x32" type="image/png" />
   <link rel="icon" href="./icons/icon-64.png" sizes="64x64" type="image/png" />
@@ -23,9 +23,9 @@
 </head>
 <body data-view="design">
   <header class="topbar">
-    <button class="brand" id="btnHome" type="button" aria-label="PRINTBADGE.COM — Home">
-      <img src="./brand/logo-mark.webp" alt="" width="36" height="36" />
-      <span class="wordmark">PRINTBADGE<b>.COM</b></span>
+    <button class="brand" id="btnHome" type="button" aria-label="BadgeOK — Home">
+      <img src="./brand/logo-mark.webp" alt="" width="38" height="38" />
+      <span class="wordmark">badge<b>ok</b><small>.com</small></span>
     </button>
 
     <nav class="steps" aria-label="Passaggi">
@@ -54,11 +54,14 @@
         <select id="langSelect">
           <option value="it">IT</option>
           <option value="en">EN</option>
+          <option value="es">ES</option>
+          <option value="fr">FR</option>
+          <option value="de">DE</option>
         </select>
       </label>
       <button class="btn-main" id="btnNext" type="button"><span id="btnNextLabel">Avanti</span><i data-lucide="arrow-right"></i></button>
     </div>
-    <input type="file" id="fileOpen" accept=".printbadge,.json,application/json" hidden />
+    <input type="file" id="fileOpen" accept=".badgeok,.printbadge,.json,application/json" hidden />
   </header>
 
   <main class="views">

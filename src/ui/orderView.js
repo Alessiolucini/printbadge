@@ -7,7 +7,7 @@ import { renderSide } from '../print/render.js';
 import { cardPages, pagesToPDF } from '../print/output.js';
 import { projectUsesFields } from './printView.js';
 import { LOGO_PLACEHOLDER } from '../editor/editor.js';
-import { loadCatalog, quote, formatMoney, uploadOrderFiles, createCheckout, legalLinks } from '../shop/shop.js';
+import { loadCatalog, quote, formatMoney, localized, uploadOrderFiles, createCheckout, legalLinks } from '../shop/shop.js';
 
 const ORDER_DPI = 300;
 const BADGES_PER_FILE = 100;
@@ -50,8 +50,8 @@ export function mountOrderView({ root, editor, toast, goPeople, goDesign }) {
   const priceBox = h('div', { class: 'card-box print-cta' });
   root.replaceChildren(h('div', { class: 'order-loading empty', text: t('loadingShop') }));
 
-  const name = (p) => (lang === 'en' ? p.name_en : p.name_it);
-  const desc = (p) => (lang === 'en' ? p.description_en : p.description_it);
+  const name = (p) => localized(p, 'name', lang);
+  const desc = (p) => localized(p, 'description', lang);
   const money = (c) => formatMoney(c, catalog?.settings.currency, lang);
   const badgeProducts = () => catalog.products.filter((p) => p.kind === 'badge' && p.active);
   const addonProducts = () => catalog.products.filter((p) => p.kind === 'addon' && p.active);
@@ -175,7 +175,7 @@ export function mountOrderView({ root, editor, toast, goPeople, goDesign }) {
         ? h('p', { class: 'hint tier-hint', text: t('freeShippingHint', { amount: money(catalog.settings.free_shipping_from_cents) }) })
         : null,
       progress,
-      h('button', { class: 'btn-main lg', type: 'button', onclick: submit }, h('i', { 'data-lucide': 'shield' }), t('payButton', { total: money(q.total_cents) })),
+      h('button', { class: 'btn-main go lg', type: 'button', onclick: submit }, h('i', { 'data-lucide': 'shield' }), t('payButton', { total: money(q.total_cents) })),
       h('p', { class: 'hint secure', text: t('securePayment') }),
     ];
   }

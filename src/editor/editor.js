@@ -22,8 +22,8 @@ BaseFabricObject.ownDefaults.originY = 'top';
 Object.assign(InteractiveFabricObject.ownDefaults, {
   transparentCorners: false,
   cornerColor: '#ffffff',
-  cornerStrokeColor: '#2563ff',
-  borderColor: '#2563ff',
+  cornerStrokeColor: '#0567cf',
+  borderColor: '#0567cf',
   cornerStyle: 'circle',
   cornerSize: 10,
   borderScaleFactor: 1.5,
@@ -53,10 +53,10 @@ export const LOGO_PLACEHOLDER =
   'data:image/svg+xml;base64,' +
   btoa(
     '<svg xmlns="http://www.w3.org/2000/svg" width="400" height="140" viewBox="0 0 400 140">' +
-      '<rect x="3" y="3" width="394" height="134" rx="22" fill="#e8f1ff" stroke="#2563ff" stroke-width="5" stroke-dasharray="16 12"/>' +
-      '<rect x="40" y="38" width="64" height="64" rx="14" fill="#2563ff"/>' +
+      '<rect x="3" y="3" width="394" height="134" rx="22" fill="#e8f1ff" stroke="#0567cf" stroke-width="5" stroke-dasharray="16 12"/>' +
+      '<rect x="40" y="38" width="64" height="64" rx="14" fill="#0567cf"/>' +
       '<path d="M52 90l16-20 12 13 8-9 12 16z" fill="#fff"/><circle cx="88" cy="56" r="7" fill="#fff"/>' +
-      '<text x="128" y="88" font-family="Montserrat,Arial,sans-serif" font-weight="800" font-size="46" fill="#2563ff">LOGO</text></svg>',
+      '<text x="128" y="88" font-family="Montserrat,Arial,sans-serif" font-weight="800" font-size="46" fill="#0567cf">LOGO</text></svg>',
   );
 
 export function uid() {

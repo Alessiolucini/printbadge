@@ -1,8 +1,10 @@
-/* PRINTBADGE.COM — identità visiva: navy e blu pieni, accenti CMYK (ciano, magenta, giallo).
-   Niente viola e niente sfumature: colori piatti, come la stampa. */
+/* BadgeOK — identità visiva dal logo: navy e blu pieni, verde "ok" come accento.
+   Niente viola e niente sfumature: colori piatti. */
 :root {
-  --navy: #0b1d51;
-  --blue: #2563ff;
+  --navy: #08204f;
+  --blue: #0567cf;
+  --green: #22ae2e;
+  --green-dark: #1a8f25;
   --cyan: #06b6d4;
   --magenta: #ec4899;
   --yellow: #facc15;
@@ -10,9 +12,9 @@
   --off-white: #f8fafc;
   --slate: #64748b;
   --charcoal: #1f2937;
-  --blue-dark: #1d4ed8;
+  --blue-dark: #02489d;
   --soft: #eef4ff;
-  --cmyk: linear-gradient(90deg, var(--cyan) 0 25%, var(--magenta) 25% 50%, var(--yellow) 50% 75%, var(--navy) 75% 100%);
+  --green-soft: #e7f7e9;
 
   --bg: var(--off-white);
   --surface: #ffffff;
@@ -27,10 +29,10 @@
   --danger: #e11d48;
   --stage: #eaf1fc;
   --stage-dot: #d3def0;
-  --shadow-sm: 0 1px 2px rgb(11 29 81 / 6%);
-  --shadow: 0 1px 2px rgb(11 29 81 / 6%), 0 12px 32px -8px rgb(11 29 81 / 16%);
-  --shadow-blue: 0 10px 24px -10px rgb(37 99 255 / 65%);
-  --card-shadow: 0 1px 2px rgb(11 29 81 / 10%), 0 18px 40px -12px rgb(11 29 81 / 30%);
+  --shadow-sm: 0 1px 2px rgb(8 32 79 / 6%);
+  --shadow: 0 1px 2px rgb(8 32 79 / 6%), 0 12px 32px -8px rgb(8 32 79 / 16%);
+  --shadow-blue: 0 10px 24px -10px rgb(5 103 207 / 60%);
+  --card-shadow: 0 1px 2px rgb(8 32 79 / 10%), 0 18px 40px -12px rgb(8 32 79 / 30%);
   --r-sm: 8px;
   --r: 12px;
   --r-lg: 18px;
@@ -111,8 +113,9 @@ kbd { margin-left: auto; font: 11px var(--font); color: var(--muted); }
 }
 .brand { display: flex; align-items: center; gap: 10px; border: 0; background: none; padding: 4px 6px 4px 0; flex: none; }
 .brand img { width: 36px; height: 36px; object-fit: contain; }
-.wordmark { font-family: var(--font-head); font-weight: 800; font-size: 18px; color: var(--navy); letter-spacing: -0.02em; }
-.wordmark b { color: var(--blue); font-weight: 800; }
+.wordmark { font-family: 'Poppins', var(--font-head); font-weight: 800; font-size: 22px; line-height: 1; color: var(--navy); letter-spacing: -0.03em; }
+.wordmark b { color: var(--green); font-weight: 800; }
+.wordmark small { font-size: 0.55em; font-weight: 600; letter-spacing: 0; margin-left: 1px; }
 @media (prefers-color-scheme: dark) { :root:not([data-theme='light']) .wordmark { color: var(--heading); } }
 .steps { display: flex; align-items: center; gap: 6px; margin: 0 auto; }
 .step {
@@ -127,7 +130,7 @@ kbd { margin-left: auto; font: 11px var(--font); color: var(--muted); }
 .step.active { background: var(--accent-soft); color: var(--heading); }
 .step.active .step-n { background: var(--blue); color: #fff; border-color: transparent; box-shadow: var(--shadow-blue); }
 .step.done .step-n { background: var(--navy); color: #fff; border-color: transparent; }
-.step-count { min-width: 22px; height: 22px; padding: 0 7px; border-radius: 99px; background: var(--magenta); color: #fff; font-size: 11.5px; display: grid; place-items: center; }
+.step-count { min-width: 22px; height: 22px; padding: 0 7px; border-radius: 99px; background: var(--green); color: #fff; font-size: 11.5px; display: grid; place-items: center; }
 .step-line { width: 28px; height: 2px; border-radius: 2px; background: var(--line-strong); }
 .tb-right { display: flex; align-items: center; gap: 10px; flex: none; }
 .tb-group { display: flex; align-items: center; gap: 2px; }
@@ -162,22 +165,22 @@ body:not([data-view='design']) #historyGroup { display: none; }
 /* ------------------------------------------------------------ home */
 .home { max-width: 1200px; margin: 0 auto; padding: 36px 28px 64px; }
 .hero {
-  position: relative; display: grid; grid-template-columns: 1.05fr 1fr; align-items: center; gap: 24px;
-  padding: 44px 48px; border-radius: 28px; overflow: hidden; background: var(--soft); border: 1px solid var(--line);
+  position: relative; display: grid; grid-template-columns: 1fr; justify-items: center; text-align: center; gap: 18px;
+  padding: 48px 48px 40px; border-radius: 28px; overflow: hidden; background: var(--soft); border: 1px solid var(--line);
 }
 .hero::after {
   content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 6px;
-  background: var(--cmyk); pointer-events: none;
+  background: var(--green); pointer-events: none;
 }
 .eyebrow { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-head); font-weight: 800; font-size: 12px; letter-spacing: 0.14em; color: var(--blue); text-transform: uppercase; }
-.eyebrow::before { content: ''; width: 28px; height: 4px; border-radius: 1px; background: var(--cmyk); }
+.eyebrow::before { content: ''; width: 24px; height: 4px; border-radius: 4px; background: var(--green); }
 .hero h1 { font-size: clamp(32px, 4.2vw, 54px); line-height: 1.04; margin: 14px 0 16px; font-weight: 900; }
-.hero h1 em { font-style: normal; color: var(--blue); }
-.hero p.lead { font-size: 17px; color: var(--muted); margin: 0 0 26px; max-width: 520px; }
-.hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
-.hero-art { position: relative; z-index: 1; }
-.hero-art img { width: 100%; height: auto; display: block; filter: drop-shadow(0 30px 40px rgb(37 99 255 / 22%)); }
-.trust { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: 22px; color: var(--muted); font-size: 13px; }
+.hero h1 em { font-style: normal; color: var(--green); }
+.hero p.lead { font-size: 17px; color: var(--muted); margin: 0 auto 26px; max-width: 620px; }
+.hero-actions { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+.hero-art { position: relative; z-index: 1; width: 100%; max-width: 980px; }
+.hero-art img { width: 100%; height: auto; display: block; }
+.trust { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 18px; margin-top: 22px; color: var(--muted); font-size: 13px; }
 .trust span { display: inline-flex; align-items: center; gap: 6px; }
 .trust .ic { color: var(--blue); }
 
@@ -465,9 +468,8 @@ body.ready .card-holder { opacity: 1; }
 /* ------------------------------------------------------------ schermi piccoli */
 @media (max-width: 1180px) {
   .view-design { grid-template-columns: 84px minmax(0, 1fr) 300px; }
-  .tb-btn span, .wordmark { display: none; }
-  .hero { grid-template-columns: 1fr; padding: 32px; }
-  .hero-art { max-width: 560px; justify-self: center; }
+  .tb-btn span { display: none; }
+  .hero { padding: 32px; }
   .people-layout, .print-layout { grid-template-columns: 1fr; }
   .print-side, .side-preview { position: static; }
 }
@@ -533,3 +535,25 @@ body { grid-template-columns: minmax(0, 1fr); }
 .result-ic { width: 64px; height: 64px; border-radius: 50%; display: grid; place-items: center; background: var(--accent-soft); color: var(--blue); }
 .result-ic.warn-ic { background: #fff1f2; color: var(--danger); }
 @media (max-width: 820px) { .mode-switch { width: 100%; } .mode-switch .seg-btn { flex: 1; } }
+
+/* Pulsante "ok": conferme e pagamento. */
+.btn-main.go { background: var(--green); box-shadow: 0 10px 24px -10px rgb(34 174 46 / 60%); }
+.btn-main.go:hover { background: var(--green-dark); }
+
+/* Percorso ordine → stampa → spedizione nella home. */
+.flow { margin: 0 0 42px; padding: 30px 28px; border-radius: 26px; background: var(--surface); border: 1px solid var(--line); box-shadow: var(--shadow-sm); }
+.flow .section-head { justify-content: center; text-align: center; }
+.flow-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; counter-reset: flow; }
+.flow-step { position: relative; display: grid; justify-items: center; text-align: center; gap: 8px; padding: 6px 10px; }
+.flow-step img { width: 100%; max-width: 190px; height: 130px; object-fit: contain; }
+.flow-step h3 { margin: 0; font-size: 16px; display: inline-flex; align-items: center; gap: 8px; }
+.flow-step h3::before { counter-increment: flow; content: counter(flow); width: 24px; height: 24px; border-radius: 50%; display: inline-grid; place-items: center; background: var(--green); color: #fff; font-size: 12px; }
+.flow-step p { margin: 0; color: var(--muted); font-size: 13.5px; max-width: 280px; }
+.flow-step:not(:last-child)::after {
+  content: ''; position: absolute; top: 78px; right: -18px; width: 36px; height: 0; border-top: 3px dotted var(--green);
+}
+@media (max-width: 820px) {
+  .flow { padding: 22px 16px; }
+  .flow-steps { grid-template-columns: 1fr; }
+  .flow-step:not(:last-child)::after { display: none; }
+}

@@ -52,10 +52,10 @@ export function numberInput(value, onCommit, { step = 0.1, min, max, digits = 1,
   return wrap;
 }
 
-// Palette PRINTBADGE.COM proposta in ogni selettore colore.
+// Palette BadgeOK proposta in ogni selettore colore.
 export const BRAND_SWATCHES = [
-  '#0B1D51', '#2563FF', '#06B6D4', '#EC4899', '#FACC15', '#DC2626',
-  '#1F2937', '#64748B', '#E8F1FF', '#E2E8F0', '#FFFFFF', '#000000',
+  '#08204F', '#0567CF', '#22AE2E', '#06B6D4', '#EC4899', '#FACC15',
+  '#DC2626', '#1F2937', '#64748B', '#E8F1FF', '#FFFFFF', '#000000',
 ];
 
 export function colorInput(value, onInput) {

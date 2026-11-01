@@ -1,26 +1,27 @@
-# PRINTBADGE.COM
+# BadgeOK
 
-**Badge, pass per eventi e tessere per qualsiasi stampante.** Editor gratuito che funziona nel browser: scegli un modello, aggiungi le persone da Excel e stampi su una stampante di card (Evolis, Zebra, HID FARGO, Entrust/Datacard, Magicard, IDP, Matica, DNP, HiTi…), su una stampante di etichette (Brother, DYMO, Zebra ZPL, Epson ColorWorks) o su una normale stampante da ufficio con fogli A4/Letter.
+**Il tuo badge, stampato e spedito subito.** Su [badgeok.com](https://badgeok.com) si crea online un badge, un pass per eventi o una tessera: appena il cliente ordina e paga, l'ordine arriva direttamente alla nostra stampante, va in stampa in automatico e parte subito con la spedizione. Chi ha già una stampante può anche stamparlo da sé: card printer (Evolis, Zebra, HID FARGO, Entrust/Datacard, Magicard, IDP, Matica, DNP, HiTi…), stampanti di etichette (Brother, DYMO, Zebra ZPL, Epson ColorWorks) o una normale stampante A4/Letter.
 
-I dati e le foto restano sul computer di chi usa l'app: non c'è nessun server e nessun account.
+Il sito è in **italiano, inglese, spagnolo, francese e tedesco** e si apre da solo nella lingua del browser; la lingua si cambia dal selettore in alto o con `?lang=es` (`it`, `en`, `es`, `fr`, `de`) nell'indirizzo.
 
-![PRINTBADGE.COM](public/brand/og.jpg)
+![BadgeOK](public/brand/og.jpg)
 
 ## Come funziona: 3 passi
 
 1. **Progetta** – parti da un modello (partecipante, relatore, staff, dipendente, visitatore, evento 4×3″, tessera socio) e modifica tutto con un clic. Selezionando un elemento compare una barra rapida con dimensione del testo, grassetto, colori del brand, duplica ed elimina.
 2. **Persone** – trascina un file `.xlsx` o `.csv`, oppure incolla le celle da Excel/Numbers/Google Fogli. Ogni riga diventa un badge; i campi `{{NomeColonna}}` nei testi e nei codici vengono riempiti da soli. Le foto si abbinano per nome file o URL. Anteprima dal vivo per ogni persona.
-3. **Stampa** – scegli la marca e il modello della stampante (con ricerca), il supporto (card/etichetta o fogli A4/Letter) e premi **Stampa**.
+3. **Ordina** – scegli il prodotto e gli accessori e paghi: il badge viene stampato subito e spedito. In alternativa, con **Stampa da te**, scegli la marca e il modello della stampante, il supporto (card/etichetta o fogli A4/Letter) e stampi in proprio.
 
-Altre funzioni: fronte/retro, codici QR, Data Matrix, Aztec, PDF417, Code 128, Code 39, EAN, UPC, ITF e Codabar; testo che si riduce da solo per i nomi lunghi; foto da webcam; forme e onde sfumate; livelli, blocco, annulla/ripeti; salvataggio automatico e progetti `.printbadge`; interfaccia in italiano e inglese; installabile come app (PWA) e utilizzabile offline dopo la prima visita.
+Altre funzioni: fronte/retro, codici QR, Data Matrix, Aztec, PDF417, Code 128, Code 39, EAN, UPC, ITF e Codabar; testo che si riduce da solo per i nomi lunghi; foto da webcam; forme e onde sfumate; livelli, blocco, annulla/ripeti; salvataggio automatico e progetti `.badgeok` (si aprono anche i vecchi `.printbadge`); interfaccia in 5 lingue; installabile come app (PWA) e utilizzabile offline dopo la prima visita.
 
 ## Negozio online
 
-Con Supabase (anche self-hosted) e Stripe il passo 3 diventa **Ordina**:
+Con Supabase (anche self-hosted) e Stripe il passo 3 diventa **Ordina**, ed è qui che nasce la promessa "stampato e spedito subito":
 1. il cliente sceglie il prodotto e gli accessori;
-2. paga con carta su Stripe Checkout;
-3. l'ordine entra in una coda di stampa;
-4. l'[agente di stampa](agent/printbadge-agent.mjs), sul computer collegato alla stampante, lo stampa da solo.
+2. paga con carta su Stripe Checkout (nella sua lingua);
+3. appena il pagamento è confermato, l'ordine entra nella coda di stampa;
+4. l'[agente di stampa](agent/printbadge-agent.mjs), sul computer collegato alla stampante in ufficio, lo prende e lo stampa da solo;
+5. il badge stampato viene imbustato e spedito.
 
 La stampa in proprio resta disponibile con il pulsante *Stampa da te*.
 
@@ -28,7 +29,7 @@ Installazione e configurazione passo per passo: [docs/NEGOZIO.md](docs/NEGOZIO.m
 
 ## Perché funziona con tutte le stampanti
 
-I programmi dei produttori (come Badge Studio di Evolis, basato su cardPresso) controllano il modello di stampante e si attivano solo con quelli del marchio. Print Badge non usa protocolli proprietari: prepara pagine della **misura esatta della card o dell'etichetta** alla risoluzione della stampante e le consegna al **driver di sistema** (CUPS su macOS e Linux, spooler di Windows). Ogni stampante che ha un driver funziona.
+I programmi dei produttori (come Badge Studio di Evolis, basato su cardPresso) controllano il modello di stampante e si attivano solo con quelli del marchio. BadgeOK non usa protocolli proprietari: prepara pagine della **misura esatta della card o dell'etichetta** alla risoluzione della stampante e le consegna al **driver di sistema** (CUPS su macOS e Linux, spooler di Windows). Ogni stampante che ha un driver funziona.
 
 | Uscita | Quando usarla |
 | --- | --- |
@@ -42,9 +43,9 @@ I profili in [`src/config/printers.js`](src/config/printers.js) precompilano ris
 
 ## Identità visiva
 
-Colori pieni, niente sfumature e niente viola: navy `#0B1D51` e blu `#2563FF` come colori principali, con gli accenti dei colori di stampa CMYK (ciano `#06B6D4`, magenta `#EC4899`, giallo `#FACC15`). Le righe CMYK a colori netti sono l'elemento grafico ricorrente (sotto l'hero, accanto ai titoli, nella fascia del modello Visitatore). Caratteri: Montserrat per titoli e pulsanti, Inter per il testo.
+Colori presi dal logo, pieni e senza sfumature né viola: navy `#08204F` e blu `#0567CF` come colori principali, verde `#22AE2E` (la "ok" del logo) per conferme, pagamento e messaggi di stampa e spedizione. Caratteri: Poppins per il marchio, Montserrat per titoli e pulsanti, Inter per il testo.
 
-Le illustrazioni, il logo, le icone dell'app, l'immagine di condivisione e le foto delle persone di esempio sono state generate con Higgsfield a partire dalle tavole del brand e ricolorate in stile piatto; si trovano in [`public/brand`](public/brand), [`public/icons`](public/icons) e [`public/samples`](public/samples).
+Il logo originale è in [`public/brand/logo-badgeok.png`](public/brand/logo-badgeok.png); il simbolo usato nell'intestazione è ritagliato da quello. L'illustrazione principale, le tre illustrazioni del percorso ordine → stampa → spedizione, le icone dell'app, l'immagine per i social e le foto delle persone di esempio sono state generate con Higgsfield a partire dal logo; si trovano in [`public/brand`](public/brand), [`public/icons`](public/icons) e [`public/samples`](public/samples).
 
 ## Sviluppo
 
@@ -99,7 +100,8 @@ src/
   shop/shop.js         collegamento a Supabase: catalogo, file, checkout
   templates.js         modelli di partenza
   config/              formati e profili stampanti
-  i18n.js              traduzioni
+  i18n.js              lingue e scelta automatica
+  locales/             testi in it, en, es, fr, de (un file per lingua)
 ```
 
 ## Licenza
@@ -110,4 +112,4 @@ MIT — vedi [LICENSE](LICENSE).
 
 ### English
 
-PRINTBADGE.COM is a free, browser-based badge and ID card designer that prints to **any** printer with a system driver: card printers, label printers and office printers (A4/Letter sheets). Three steps — design, add people from Excel/CSV, print — with photos, QR and barcodes, duplex, PDF/PNG export and ZPL for Zebra-compatible thermal printers. All data stays on the user's device. Run `npm install && npm run dev` to start developing.
+BadgeOK (badgeok.com) lets people design an ID badge, event pass or member card online and order it: as soon as the payment is confirmed, the order goes straight to our printer, prints automatically and ships right away. It can also print to **any** printer with a system driver (card, label and office printers). Available in Italian, English, Spanish, French and German, picked automatically from the browser language. Run `npm install && npm run dev` to start developing.

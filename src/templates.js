@@ -1,10 +1,10 @@
 import { mm } from './editor/editor.js';
 
-// Modelli di partenza nello stile PRINTBADGE.COM: colori pieni (navy, blu e accenti CMYK),
+// Modelli di partenza nello stile BadgeOK: colori pieni (navy, blu, verde e accenti CMYK),
 // niente sfumature. Coordinate in millimetri. Le forme che toccano il bordo escono di 2 mm,
 // così la stampa con abbondanza resta piena.
-const NAVY = '#0B1D51';
-const BLUE = '#2563FF';
+const NAVY = '#08204F';
+const BLUE = '#0567CF';
 const CYAN = '#06B6D4';
 const MAGENTA = '#EC4899';
 const YELLOW = '#FACC15';

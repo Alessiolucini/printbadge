@@ -350,8 +350,8 @@ export function mountPrintView({ root, editor, toast, goPeople, embedded = false
       if (action === 'png') {
         const rec = st.scope === 'copies' ? null : data.rows[recordIndexes()[0] ?? data.current] || null;
         const { fronts, backs } = await renderAll([rec], { dpi: st.dpi, bleed: st.bleed, withBack: st.back, onProgress });
-        fronts[0].toBlob((b) => download(b, `printbadge-front-${stamp()}.png`));
-        if (backs) backs[0].toBlob((b) => download(b, `printbadge-back-${stamp()}.png`));
+        fronts[0].toBlob((b) => download(b, `badgeok-front-${stamp()}.png`));
+        if (backs) backs[0].toBlob((b) => download(b, `badgeok-back-${stamp()}.png`));
         return;
       }
       const records = recordList();
@@ -362,7 +362,7 @@ export function mountPrintView({ root, editor, toast, goPeople, embedded = false
       if (action === 'zpl') {
         const { fronts } = await renderAll(records, { dpi: printer().dpi, bleed: 0, withBack: false, onProgress });
         const zpl = fronts.map((c) => canvasToZPL(c)).join('');
-        download(new Blob([zpl], { type: 'text/plain' }), `printbadge-${stamp()}.zpl`);
+        download(new Blob([zpl], { type: 'text/plain' }), `badgeok-${stamp()}.zpl`);
         toast(t('zplSaved'));
         return;
       }
@@ -371,7 +371,7 @@ export function mountPrintView({ root, editor, toast, goPeople, embedded = false
       if (action === 'pdf') {
         label.textContent = t('buildingPdf');
         await new Promise((r) => setTimeout(r, 30));
-        download(pagesToPDF(pages.all), `printbadge-${stamp()}.pdf`);
+        download(pagesToPDF(pages.all), `badgeok-${stamp()}.pdf`);
         toast(t('pdfSaved'));
       } else if (action === 'print') {
         await printPages(pages.all);

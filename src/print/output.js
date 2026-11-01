@@ -102,7 +102,7 @@ export function printPages(pages) {
         return `<section>${imgs}${marks}</section>`;
       })
       .join('');
-    const html = `<!doctype html><html><head><meta charset="utf-8"><title>Print Badge</title><style>
+    const html = `<!doctype html><html><head><meta charset="utf-8"><title>BadgeOK</title><style>
       @page { size: ${w}mm ${h}mm; margin: 0; }
       html, body { margin: 0; padding: 0; background: #fff; }
       section { position: relative; width: ${w}mm; height: ${h}mm; overflow: hidden; break-after: page; page-break-after: always; }
@@ -144,7 +144,7 @@ export function pagesToPDF(pages, { jpeg = false, quality = 0.92 } = {}) {
       for (const [x1, y1, x2, y2] of p.marks) pdf.line(x1, y1, x2, y2);
     }
   });
-  pdf.setProperties({ title: 'Print Badge', creator: 'Print Badge' });
+  pdf.setProperties({ title: 'BadgeOK', creator: 'BadgeOK (badgeok.com)' });
   return pdf.output('blob');
 }
 

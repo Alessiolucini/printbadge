@@ -3,7 +3,7 @@
 Come funziona un ordine:
 
 ```
-Cliente su printbadge.com ── progetta, carica le persone, sceglie prodotto e accessori
+Cliente su badgeok.com ── progetta, carica le persone, sceglie prodotto e accessori
         │  1. il sito genera i PDF dei badge (300 dpi, formato esatto) e li carica nel bucket privato "order-files"
         │  2. chiama la funzione create-checkout: il prezzo viene ricalcolato dal server
         ▼
@@ -49,7 +49,7 @@ In `shop_settings` imposti:
    ```yaml
    STRIPE_SECRET_KEY: ${STRIPE_SECRET_KEY}
    STRIPE_WEBHOOK_SECRET: ${STRIPE_WEBHOOK_SECRET}
-   SITE_URL: https://printbadge.com
+   SITE_URL: https://badgeok.com
    ```
    e metti i valori nel file `.env` di Supabase.
 3. Sempre nel `.env` imposta `FUNCTIONS_VERIFY_JWT=false`. Stripe non può inviare il token di Supabase: le due funzioni controllano da sole input e firma del webhook.
@@ -72,7 +72,7 @@ Le funzioni rispondono a `https://IL-TUO-SUPABASE/functions/v1/create-checkout` 
 
 Le chiavi segrete restano solo sul server Supabase: nel sito c'è solo la chiave pubblica `anon`.
 
-## 4. Sito printbadge.com
+## 4. Sito badgeok.com
 
 Su **Dokploy** imposti queste variabili nell'*Environment* del servizio WEB. Il container le legge all'avvio, quindi non serve ricompilare (vedi [DOKPLOY.md](DOKPLOY.md)):
 

@@ -1,4 +1,4 @@
-// Profili di stampa. Print Badge non parla un protocollo proprietario: genera pagine
+// Profili di stampa. BadgeOK non parla un protocollo proprietario: genera pagine
 // della misura esatta della card e le passa al driver di sistema (CUPS su macOS/Linux,
 // spooler su Windows), quindi funziona con qualunque stampante abbia un driver.
 // I profili servono solo a precompilare risoluzione, fronte/retro, abbondanza e formati.

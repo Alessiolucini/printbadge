@@ -35,8 +35,15 @@ export async function loadCatalog() {
   return catalogCache;
 }
 
+const MONEY_LOCALES = { it: 'it-IT', en: 'en-IE', es: 'es-ES', fr: 'fr-FR', de: 'de-DE' };
+
 export function formatMoney(cents, currency = 'eur', locale = 'it') {
-  return new Intl.NumberFormat(locale === 'en' ? 'en-IE' : 'it-IT', { style: 'currency', currency: currency.toUpperCase() }).format(cents / 100);
+  return new Intl.NumberFormat(MONEY_LOCALES[locale] || 'en-IE', { style: 'currency', currency: currency.toUpperCase() }).format(cents / 100);
+}
+
+/** Nome o descrizione del prodotto nella lingua scelta; senza traduzione si usa l'inglese. */
+export function localized(product, field, locale) {
+  return product[`${field}_${locale}`] || (locale === 'it' ? product[`${field}_it`] : product[`${field}_en`]) || product[`${field}_it`] || '';
 }
 
 /** Carica i file dell'ordine in una cartella nuova e restituisce i percorsi. */

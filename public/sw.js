@@ -1,5 +1,5 @@
-// Service worker minimale: rende Print Badge utilizzabile anche offline dopo la prima visita.
-const CACHE = 'printbadge-v3';
+// Service worker minimale: rende BadgeOK utilizzabile anche offline dopo la prima visita.
+const CACHE = 'badgeok-v1';
 
 self.addEventListener('install', (e) => {
   e.waitUntil(caches.open(CACHE).then((c) => c.addAll(['./', './index.html', './manifest.webmanifest'])));

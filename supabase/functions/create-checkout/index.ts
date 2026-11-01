@@ -9,6 +9,16 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const text = (v: unknown, max: number) => (typeof v === 'string' ? v.trim().slice(0, max) : '');
 
+// Lingue del sito, tutte supportate anche da Stripe Checkout.
+const LOCALES = ['it', 'en', 'es', 'fr', 'de'];
+const SHIPPING_LABELS: Record<string, [string, string]> = {
+  it: ['Spedizione', 'Spedizione gratuita'],
+  en: ['Shipping', 'Free shipping'],
+  es: ['Envío', 'Envío gratuito'],
+  fr: ['Livraison', 'Livraison gratuite'],
+  de: ['Versand', 'Kostenloser Versand'],
+};
+
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders });
   if (req.method !== 'POST') return json({ error: 'method_not_allowed' }, 405);
@@ -21,7 +31,7 @@ Deno.serve(async (req) => {
   }
 
   const quantity = Number(body.quantity);
-  const locale = body.locale === 'en' ? 'en' : 'it';
+  const locale = LOCALES.includes(body.locale) ? body.locale : 'it';
   const customer = body.customer ?? {};
   const email = text(customer.email, 200);
   const name = text(customer.name, 120);
@@ -94,7 +104,7 @@ Deno.serve(async (req) => {
 
   const site = (Deno.env.get('SITE_URL') ?? new URL(req.headers.get('origin') ?? 'http://localhost:5174').origin).replace(/\/$/, '');
   const back = `${site}/?order=${order.id}&token=${order.public_token}`;
-  const names = Object.fromEntries(catalog.map((p) => [p.id, locale === 'en' ? p.name_en : p.name_it]));
+  const names = Object.fromEntries(catalog.map((p) => [p.id, p[`name_${locale}`] || (locale === 'it' ? p.name_it : p.name_en)]));
   const params: Record<string, string | number> = {
     mode: 'payment',
     locale,
@@ -109,7 +119,7 @@ Deno.serve(async (req) => {
     'shipping_options[0][shipping_rate_data][type]': 'fixed_amount',
     'shipping_options[0][shipping_rate_data][fixed_amount][amount]': q.shipping_cents,
     'shipping_options[0][shipping_rate_data][fixed_amount][currency]': q.currency,
-    'shipping_options[0][shipping_rate_data][display_name]': q.shipping_cents ? (locale === 'en' ? 'Shipping' : 'Spedizione') : (locale === 'en' ? 'Free shipping' : 'Spedizione gratuita'),
+    'shipping_options[0][shipping_rate_data][display_name]': SHIPPING_LABELS[locale][q.shipping_cents ? 0 : 1],
   };
   settings.allowed_countries.forEach((c: string, i: number) => (params[`shipping_address_collection[allowed_countries][${i}]`] = c));
   q.lines.forEach((line, i) => {
