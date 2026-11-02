@@ -13,8 +13,11 @@
 // media:  pagina "Card" del driver, quando è più grande della card: il driver stampa un po'
 //         oltre il bordo, quindi le pagine vanno fatte di questa misura con l'abbondanza
 //         (bleed) che la copre tutta, altrimenti resta un filo bianco intorno alla card.
+// unprintable: fascia sul bordo della card che la stampante non stampa mai, in mm per lato
+//         (limite della meccanica: l'anteprima la mostra bianca come sulla card stampata).
 
 // PPD Evolis Badgy100/200: PaperDimension Card = 155.53 × 243.85 pt.
+// Scheda tecnica Evolis: la Badgy100 lascia un margine di 1,35 mm, la Badgy200 stampa bordo a bordo.
 const BADGY_CARD = { w: 86.03, h: 54.87 };
 
 const card = (brand, model, extra = {}) => ({
@@ -30,7 +33,7 @@ export const PRINTERS = [
 
   { id: 'evolis-primacy2', ...card('Evolis', 'Primacy 2') },
   { id: 'evolis-zenius', ...card('Evolis', 'Zenius', { duplex: false }) },
-  { id: 'evolis-badgy100', ...card('Evolis', 'Badgy 100', { dpi: 260, duplex: false, formats: ['CR80'], bleed: 1, media: BADGY_CARD }) },
+  { id: 'evolis-badgy100', ...card('Evolis', 'Badgy 100', { dpi: 260, duplex: false, formats: ['CR80'], bleed: 1, media: BADGY_CARD, unprintable: 1.35 }) },
   { id: 'evolis-badgy200', ...card('Evolis', 'Badgy 200', { dpi: 260, duplex: false, formats: ['CR80'], bleed: 1, media: BADGY_CARD }) },
   { id: 'evolis-avansia', ...card('Evolis', 'Avansia', { tech: 'retransfer', dpi: 600, bleed: 1 }) },
 

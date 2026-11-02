@@ -83,6 +83,7 @@ export default {
     tech_dts: 'Impresora de tarjetas', tech_retransfer: 'Retransferencia', tech_thermal: 'Etiquetas', tech_inkjet: 'Inyección de tinta a color', tech_sheet: 'Hojas',
     duplexShort: 'doble cara',
     formatWarn: 'El formato {fmt} no es habitual en esta impresora: comprueba el soporte cargado.',
+    unprintableWarn: 'Esta impresora no imprime los últimos {mm} mm de cada lado: la tarjeta sale con un marco blanco, como en la vista previa. Mantén textos y logos dentro de la zona segura discontinua. Para imprimir hasta el borde necesitas un modelo de borde a borde, como la Badgy 200.',
     whichRecords: 'Qué personas', scopeAll: 'Todas ({n})', scopeSelected: 'Solo las seleccionadas ({n})', scopeCurrent: 'Solo la persona n.º {n}',
     fieldsNoData: 'La credencial usa campos como {{Nome}}, pero todavía no has añadido personas.', addPeopleLink: 'Añádelas ahora',
     copies: 'Copias', copiesPerRecord: 'Copias por persona', printBackSide: 'Imprimir también el reverso',

@@ -88,6 +88,7 @@ export default {
     tech_dts: 'Card printer', tech_retransfer: 'Ritrasferimento', tech_thermal: 'Etichette', tech_inkjet: 'Inkjet a colori', tech_sheet: 'Fogli',
     duplexShort: 'fronte/retro',
     formatWarn: 'Il formato {fmt} non è tipico per questa stampante: controlla il supporto caricato.',
+    unprintableWarn: 'Questa stampante non stampa gli ultimi {mm} mm di ogni lato: la card esce con una cornice bianca, come nell’anteprima. Tieni testi e loghi dentro l’area sicura tratteggiata. Per stampare fino al bordo serve un modello bordo a bordo, per esempio la Badgy 200.',
     whichRecords: 'Quali persone', scopeAll: 'Tutte ({n})', scopeSelected: 'Solo le selezionate ({n})', scopeCurrent: 'Solo la persona n. {n}',
     fieldsNoData: 'Il badge usa dati come {{Nome}} ma non hai ancora aggiunto persone.', addPeopleLink: 'Aggiungile ora',
     copies: 'Copie', copiesPerRecord: 'Copie per persona', printBackSide: 'Stampa anche il retro',

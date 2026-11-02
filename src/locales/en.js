@@ -83,6 +83,7 @@ export default {
     tech_dts: 'Card printer', tech_retransfer: 'Retransfer', tech_thermal: 'Labels', tech_inkjet: 'Color inkjet', tech_sheet: 'Sheets',
     duplexShort: 'duplex',
     formatWarn: 'The {fmt} format is unusual for this printer: check the loaded media.',
+    unprintableWarn: 'This printer can’t print the outer {mm} mm on each side: the card comes out with a white frame, as in the preview. Keep texts and logos inside the dashed safe area. To print to the edge you need an edge-to-edge model, such as the Badgy 200.',
     whichRecords: 'Which people', scopeAll: 'Everyone ({n})', scopeSelected: 'Selected only ({n})', scopeCurrent: 'Only person #{n}',
     fieldsNoData: 'The badge uses fields like {{Nome}} but you haven’t added any people yet.', addPeopleLink: 'Add them now',
     copies: 'Copies', copiesPerRecord: 'Copies per person', printBackSide: 'Print the back side too',

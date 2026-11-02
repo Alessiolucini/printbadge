@@ -1,4 +1,4 @@
-import { t } from '../i18n.js';
+import { t, getLang } from '../i18n.js';
 import { h, field, select, numberInput, segmented } from './dom.js';
 import { paintIcons } from './icons.js';
 import { PRINTERS, getPrinter, cardPage } from '../config/printers.js';
@@ -171,6 +171,7 @@ export function mountPrintView({ root, editor, toast, goPeople, embedded = false
       search,
       list,
       fmtOk ? null : h('p', { class: 'warn', text: t('formatWarn', { fmt: getFormat(doc.formatId).label }) }),
+      p.unprintable ? h('p', { class: 'warn', text: t('unprintableWarn', { mm: p.unprintable.toLocaleString(getLang()) }) }) : null,
       h('p', { class: 'hint', text: t('anyPrinterHint') }),
     );
   }
@@ -300,12 +301,14 @@ export function mountPrintView({ root, editor, toast, goPeople, embedded = false
     if (token !== previewToken) return;
     const pages = layout(fronts, backs).all.slice(0, 2);
     const k = st.mode === 'card' ? Math.min(3.4, 250 / Math.max(card.w, card.h)) : 0.85;
-    preview.replaceChildren(...pages.map((pg, i) => h('figure', {}, pageThumb(pg, k), h('figcaption', { text: st.back ? (i === 0 ? t('front') : t('back')) : `${pg.w.toFixed(1)} × ${pg.h.toFixed(1)} mm` }))));
+    const edge = st.mode === 'card' ? printer().unprintable || 0 : 0;
+    preview.replaceChildren(...pages.map((pg, i) => h('figure', {}, pageThumb(pg, k, edge), h('figcaption', { text: st.back ? (i === 0 ? t('front') : t('back')) : `${pg.w.toFixed(1)} × ${pg.h.toFixed(1)} mm` }))));
     const n = records.length;
     summary.textContent = t('summary', { cards: n, pages: countPages(n) });
   }
 
-  function pageThumb(page, k) {
+  /** `edge`: fascia in mm sul bordo della card che la stampante non stampa (resta bianca). */
+  function pageThumb(page, k, edge = 0) {
     const c = document.createElement('canvas');
     const dpr = window.devicePixelRatio || 1;
     c.width = Math.round(page.w * k * dpr);
@@ -317,6 +320,13 @@ export function mountPrintView({ root, editor, toast, goPeople, embedded = false
     g.fillStyle = '#fff';
     g.fillRect(0, 0, page.w, page.h);
     for (const it of page.items) g.drawImage(it.img, it.x, it.y, it.w, it.h);
+    if (edge > 0) {
+      // La fascia è fissa sulla card (non segue lo spostamento X/Y della calibrazione).
+      g.beginPath();
+      g.rect(0, 0, page.w, page.h);
+      g.rect((page.w - card.w) / 2 + edge, (page.h - card.h) / 2 + edge, card.w - 2 * edge, card.h - 2 * edge);
+      g.fill('evenodd');
+    }
     g.strokeStyle = '#000';
     g.lineWidth = 0.2;
     for (const [x1, y1, x2, y2] of page.marks) {

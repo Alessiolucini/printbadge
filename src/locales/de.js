@@ -82,6 +82,7 @@ export default {
     tech_dts: 'Kartendrucker', tech_retransfer: 'Retransfer', tech_thermal: 'Etiketten', tech_inkjet: 'Farb-Tintenstrahl', tech_sheet: 'Blätter',
     duplexShort: 'beidseitig',
     formatWarn: 'Das Format {fmt} ist für diesen Drucker ungewöhnlich: Prüfen Sie das eingelegte Medium.',
+    unprintableWarn: 'Dieser Drucker lässt an jedem Rand einen Streifen von {mm} mm unbedruckt: Die Karte hat einen weißen Rahmen, wie in der Vorschau. Halten Sie Texte und Logos innerhalb des gestrichelten Sicherheitsbereichs. Für den Druck bis zum Rand brauchen Sie ein randlos druckendes Modell, z. B. den Badgy 200.',
     whichRecords: 'Welche Personen', scopeAll: 'Alle ({n})', scopeSelected: 'Nur ausgewählte ({n})', scopeCurrent: 'Nur Person Nr. {n}',
     fieldsNoData: 'Das Badge verwendet Felder wie {{Nome}}, aber Sie haben noch keine Personen hinzugefügt.', addPeopleLink: 'Jetzt hinzufügen',
     copies: 'Kopien', copiesPerRecord: 'Kopien pro Person', printBackSide: 'Auch die Rückseite drucken',

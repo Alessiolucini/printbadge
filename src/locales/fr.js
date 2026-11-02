@@ -83,6 +83,7 @@ export default {
     tech_dts: 'Imprimante de cartes', tech_retransfer: 'Retransfert', tech_thermal: 'Étiquettes', tech_inkjet: 'Jet d’encre couleur', tech_sheet: 'Feuilles',
     duplexShort: 'recto verso',
     formatWarn: 'Le format {fmt} est inhabituel pour cette imprimante : vérifiez le support chargé.',
+    unprintableWarn: 'Cette imprimante n’imprime pas une bande de {mm} mm sur chaque bord : la carte sort avec un cadre blanc, comme dans l’aperçu. Gardez textes et logos dans la zone de sécurité en pointillés. Pour imprimer jusqu’au bord, il faut un modèle bord à bord, comme la Badgy 200.',
     whichRecords: 'Quelles personnes', scopeAll: 'Tout le monde ({n})', scopeSelected: 'Sélection uniquement ({n})', scopeCurrent: 'Uniquement la personne n° {n}',
     fieldsNoData: 'Le badge utilise des champs comme {{Nome}}, mais vous n’avez encore ajouté personne.', addPeopleLink: 'En ajouter maintenant',
     copies: 'Exemplaires', copiesPerRecord: 'Exemplaires par personne', printBackSide: 'Imprimer aussi le verso',
