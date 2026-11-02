@@ -10,6 +10,12 @@
 //       'sheet'      = stampante da ufficio con fogli A4/Letter da ritagliare
 // duplex: true = fronte/retro di serie o opzionale sul modello, false = solo fronte
 //         (per il retro usa la stampa fronte/retro manuale).
+// media:  pagina "Card" del driver, quando è più grande della card: il driver stampa un po'
+//         oltre il bordo, quindi le pagine vanno fatte di questa misura con l'abbondanza
+//         (bleed) che la copre tutta, altrimenti resta un filo bianco intorno alla card.
+
+// PPD Evolis Badgy100/200: PaperDimension Card = 155.53 × 243.85 pt.
+const BADGY_CARD = { w: 86.03, h: 54.87 };
 
 const card = (brand, model, extra = {}) => ({
   brand, model, tech: 'dts', dpi: 300, duplex: true, formats: ['CR80', 'CR79'], bleed: 0, ...extra,
@@ -24,8 +30,8 @@ export const PRINTERS = [
 
   { id: 'evolis-primacy2', ...card('Evolis', 'Primacy 2') },
   { id: 'evolis-zenius', ...card('Evolis', 'Zenius', { duplex: false }) },
-  { id: 'evolis-badgy100', ...card('Evolis', 'Badgy 100', { dpi: 260, duplex: false, formats: ['CR80'] }) },
-  { id: 'evolis-badgy200', ...card('Evolis', 'Badgy 200', { dpi: 260, duplex: false, formats: ['CR80'] }) },
+  { id: 'evolis-badgy100', ...card('Evolis', 'Badgy 100', { dpi: 260, duplex: false, formats: ['CR80'], bleed: 1, media: BADGY_CARD }) },
+  { id: 'evolis-badgy200', ...card('Evolis', 'Badgy 200', { dpi: 260, duplex: false, formats: ['CR80'], bleed: 1, media: BADGY_CARD }) },
   { id: 'evolis-avansia', ...card('Evolis', 'Avansia', { tech: 'retransfer', dpi: 600, bleed: 1 }) },
 
   { id: 'zebra-zc100', ...card('Zebra', 'ZC100', { duplex: false }) },
@@ -72,6 +78,14 @@ export const PRINTERS = [
 
 export function getPrinter(id) {
   return PRINTERS.find((p) => p.id === id) || PRINTERS[0];
+}
+
+/** Pagina da mandare al driver per una card: quella del driver se il profilo la conosce, con lo stesso orientamento. */
+export function cardPage(printer, card) {
+  if (!printer.media) return card;
+  const a = Math.max(printer.media.w, printer.media.h);
+  const b = Math.min(printer.media.w, printer.media.h);
+  return card.w >= card.h ? { w: a, h: b } : { w: b, h: a };
 }
 
 export function printersByBrand() {

@@ -14,15 +14,18 @@ export function rotate180(canvas) {
   return c;
 }
 
-/** Una card per pagina, pagina della misura esatta del supporto. */
-export function cardPages(images, card, { bleed = 0, offsetX = 0, offsetY = 0, scale = 100 }) {
+/**
+ * Una card per pagina, centrata. La pagina è della misura della card o, se il driver
+ * ne usa una più grande (vedi `media` in printers.js), della misura del driver.
+ */
+export function cardPages(images, card, { bleed = 0, offsetX = 0, offsetY = 0, scale = 100, page = card }) {
   const s = scale / 100;
   const iw = (card.w + 2 * bleed) * s;
   const ih = (card.h + 2 * bleed) * s;
   return images.map((img) => ({
-    w: card.w,
-    h: card.h,
-    items: [{ img, x: (card.w - iw) / 2 + offsetX, y: (card.h - ih) / 2 + offsetY, w: iw, h: ih }],
+    w: page.w,
+    h: page.h,
+    items: [{ img, x: (page.w - iw) / 2 + offsetX, y: (page.h - ih) / 2 + offsetY, w: iw, h: ih }],
     marks: [],
   }));
 }

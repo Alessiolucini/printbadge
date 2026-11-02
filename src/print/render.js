@@ -22,6 +22,37 @@ export async function preloadFonts(families = FONTS) {
 }
 
 /**
+ * Abbondanza automatica: allarga l'immagine di `b` pixel per lato specchiando i bordi,
+ * così sfondi, fasce e foto che arrivano al filo della card continuano oltre il taglio.
+ */
+function mirrorBleed(src, b) {
+  const w = src.width;
+  const h = src.height;
+  const out = document.createElement('canvas');
+  out.width = w + 2 * b;
+  out.height = h + 2 * b;
+  const g = out.getContext('2d');
+  g.drawImage(src, b, b);
+  // Copia la striscia (sx, sy, sw, sh) in (dx, dy) ribaltata in orizzontale (fx = -1) e/o in verticale (fy = -1).
+  const flip = (sx, sy, sw, sh, dx, dy, fx, fy) => {
+    g.save();
+    g.translate(dx + (fx < 0 ? sw : 0), dy + (fy < 0 ? sh : 0));
+    g.scale(fx, fy);
+    g.drawImage(src, sx, sy, sw, sh, 0, 0, sw, sh);
+    g.restore();
+  };
+  flip(0, 0, b, h, 0, b, -1, 1);
+  flip(w - b, 0, b, h, w + b, b, -1, 1);
+  flip(0, 0, w, b, b, 0, 1, -1);
+  flip(0, h - b, w, b, b, h + b, 1, -1);
+  flip(0, 0, b, b, 0, 0, -1, -1);
+  flip(w - b, 0, b, b, w + b, 0, -1, -1);
+  flip(0, h - b, b, b, 0, h + b, -1, -1);
+  flip(w - b, h - b, b, b, w + b, h + b, -1, -1);
+  return out;
+}
+
+/**
  * Disegna un lato della card su un canvas alla risoluzione richiesta.
  * @param sideJSON  lato serializzato dall'editor
  * @param doc       documento (formato/orientamento)
@@ -29,18 +60,14 @@ export async function preloadFonts(families = FONTS) {
  */
 export async function renderSide(sideJSON, doc, { record = null, dpi = 300, bleedMm = 0 } = {}) {
   const { w, h } = docSize(doc);
-  const W = w * PX_PER_MM;
-  const H = h * PX_PER_MM;
-  const B = Math.max(0, bleedMm) * PX_PER_MM;
   const el = document.createElement('canvas');
   const sc = new StaticCanvas(el, {
-    width: W + 2 * B,
-    height: H + 2 * B,
+    width: w * PX_PER_MM,
+    height: h * PX_PER_MM,
     enableRetinaScaling: false,
     renderOnAddRemove: false,
     backgroundColor: sideJSON?.background || '#ffffff',
   });
-  sc.setViewportTransform([1, 0, 0, 1, B, B]);
 
   const objs = await util.enlivenObjects(sideJSON?.objects || []);
   for (const o of objs) {
@@ -66,16 +93,14 @@ export async function renderSide(sideJSON, doc, { record = null, dpi = 300, blee
     } else if (o.kind === 'image' && o.getSrc() === LOGO_PLACEHOLDER) {
       // Segnaposto del logo mai sostituito: non si stampa.
       continue;
-    } else if (o.kind === 'background' && B) {
-      const s = Math.max((W + 2 * B) / o.width, (H + 2 * B) / o.height);
-      o.set({ scaleX: s, scaleY: s, left: (W - o.width * s) / 2, top: (H - o.height * s) / 2 });
     }
     sc.add(o);
   }
   sc.renderAll();
   const out = sc.toCanvasElement(dpi / 25.4 / PX_PER_MM);
   sc.dispose();
-  return out;
+  const b = Math.round((Math.max(0, bleedMm) * dpi) / 25.4);
+  return b > 0 ? mirrorBleed(out, b) : out;
 }
 
 /** Card di calibrazione: bordo, area sicura, croce centrale e righello in mm. */

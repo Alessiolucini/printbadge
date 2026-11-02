@@ -2,6 +2,7 @@ import { t, getLang } from '../i18n.js';
 import { h, field, numberInput, select } from './dom.js';
 import { paintIcons } from './icons.js';
 import { docSize, getFormat } from '../config/formats.js';
+import { getPrinter, cardPage } from '../config/printers.js';
 import { data, serializeData } from '../data/store.js';
 import { renderSide } from '../print/render.js';
 import { cardPages, pagesToPDF } from '../print/output.js';
@@ -10,6 +11,8 @@ import { LOGO_PLACEHOLDER } from '../editor/editor.js';
 import { loadCatalog, quote, formatMoney, localized, uploadOrderFiles, createCheckout, legalLinks } from '../shop/shop.js';
 
 const ORDER_DPI = 300;
+// Stampante del laboratorio: i PDF degli ordini hanno la pagina del suo driver e la sua abbondanza.
+const ORDER_PRINTER = getPrinter('evolis-badgy100');
 const BADGES_PER_FILE = 100;
 const LS_CUSTOMER = 'printbadge.customer';
 
@@ -248,15 +251,15 @@ export function mountOrderView({ root, editor, toast, goPeople, goDesign }) {
       for (let i = 0; i < recs.length; i++) {
         const key = usesFields ? recs[i] : 'static';
         if (!cache.has(key)) {
-          const f = await renderSide(project.sides.front, doc, { record: recs[i], dpi: ORDER_DPI });
-          const b = withBack ? await renderSide(project.sides.back, doc, { record: recs[i], dpi: ORDER_DPI }) : null;
+          const f = await renderSide(project.sides.front, doc, { record: recs[i], dpi: ORDER_DPI, bleedMm: ORDER_PRINTER.bleed });
+          const b = withBack ? await renderSide(project.sides.back, doc, { record: recs[i], dpi: ORDER_DPI, bleedMm: ORDER_PRINTER.bleed }) : null;
           cache.set(key, b ? [f, b] : [f]);
         }
         chunk.push(...cache.get(key));
         // Con i dati ogni persona è diversa: si tiene in memoria solo la ripetizione delle copie.
         if (usesFields && recs[i + 1] !== recs[i]) cache.delete(key);
         if ((i + 1) % BADGES_PER_FILE === 0 || i === recs.length - 1) {
-          pdfs.push(pagesToPDF(cardPages(chunk, card, { bleed: 0, offsetX: 0, offsetY: 0, scale: 100 }), { jpeg: true, quality: 0.93 }));
+          pdfs.push(pagesToPDF(cardPages(chunk, card, { bleed: ORDER_PRINTER.bleed, page: cardPage(ORDER_PRINTER, card) }), { jpeg: true, quality: 0.93 }));
           chunk = [];
         }
         step(t('preparingBadges', { i: i + 1, n: recs.length }), ((i + 1) / recs.length) * 0.6);

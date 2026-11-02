@@ -1,7 +1,7 @@
 import { t } from '../i18n.js';
 import { h, field, select, numberInput, segmented } from './dom.js';
 import { paintIcons } from './icons.js';
-import { PRINTERS, getPrinter } from '../config/printers.js';
+import { PRINTERS, getPrinter, cardPage } from '../config/printers.js';
 import { SHEETS, docSize, getFormat } from '../config/formats.js';
 import { data } from '../data/store.js';
 import { hasFields } from '../data/merge.js';
@@ -49,7 +49,12 @@ export function mountPrintView({ root, editor, toast, goPeople, embedded = false
 
   const saved = load(LS_PRINT, { printerId: 'generic-card', mode: 'card', duplex: 'auto', scope: 'all', margin: 10, gap: 4, cropMarks: true });
   const st = { ...saved, copies: 1, back: backUsed, rotateBack: false, reverseBacks: false };
-  const calib = () => load(calibKey(st.printerId), { offsetX: 0, offsetY: 0, scale: 100, dpi: getPrinter(st.printerId).dpi, bleed: getPrinter(st.printerId).bleed });
+  // Abbondanza minima: con la pagina del driver più grande della card, meno lascerebbe un filo bianco.
+  const minBleed = () => (getPrinter(st.printerId).media ? getPrinter(st.printerId).bleed : 0);
+  const calib = () => {
+    const c = load(calibKey(st.printerId), { offsetX: 0, offsetY: 0, scale: 100, dpi: getPrinter(st.printerId).dpi, bleed: getPrinter(st.printerId).bleed });
+    return { ...c, bleed: Math.max(c.bleed, minBleed()) };
+  };
   Object.assign(st, calib());
   if (!data.rows.length || !usesFields) st.scope = 'copies';
   else if (st.scope === 'copies') st.scope = 'all';
@@ -97,7 +102,7 @@ export function mountPrintView({ root, editor, toast, goPeople, embedded = false
   }
 
   function layout(fronts, backs) {
-    const opt = { bleed: st.bleed, offsetX: st.offsetX, offsetY: st.offsetY, scale: st.scale, margin: st.margin, gap: st.gap, cropMarks: st.cropMarks };
+    const opt = { bleed: st.bleed, offsetX: st.offsetX, offsetY: st.offsetY, scale: st.scale, margin: st.margin, gap: st.gap, cropMarks: st.cropMarks, page: page() };
     if (st.mode === 'card') {
       if (!backs) return { all: cardPages(fronts, card, opt) };
       const inter = fronts.flatMap((f, i) => [f, backs[i]]);
@@ -111,6 +116,7 @@ export function mountPrintView({ root, editor, toast, goPeople, embedded = false
 
   // ---------------------------------------------------------------- UI
   const printer = () => getPrinter(st.printerId);
+  const page = () => cardPage(printer(), card);
   const settings = h('div', { class: 'print-settings' });
   const preview = h('div', { class: 'print-preview' });
   const summary = h('p', { class: 'print-summary' });
@@ -125,7 +131,7 @@ export function mountPrintView({ root, editor, toast, goPeople, embedded = false
       h('img', { class: 'printers-art', src: './brand/printers.webp', alt: '', width: 120, height: 120 }),
       h('div', {},
         h('strong', { text: t('howToPrint') }),
-        h('p', { text: st.mode === 'card' ? t('tipCardMode', { w: card.w.toFixed(1), h: card.h.toFixed(1) }) : t('tipSheetMode') }),
+        h('p', { text: st.mode === 'card' ? t('tipCardMode', { w: page().w.toFixed(1), h: page().h.toFixed(1) }) : t('tipSheetMode') }),
         h('p', { text: t('tipPdfFallback') }),
       ),
     );
@@ -224,12 +230,12 @@ export function mountPrintView({ root, editor, toast, goPeople, embedded = false
   }
 
   function advancedBox() {
-    const num = (key, opts) => numberInput(st[key], (v) => { st[key] = v; persist(); rebuild(); }, opts);
+    const num = (key, opts) => numberInput(st[key], (v) => { st[key] = Math.max(opts.min ?? -Infinity, v); persist(); rebuild(); }, opts);
     return h('details', { class: 'adv', open: st.offsetX || st.offsetY || st.scale !== 100 ? true : undefined },
       h('summary', { text: t('advanced') }),
       h('div', { class: 'grid2' },
         field(t('resolution'), num('dpi', { step: 1, min: 72, max: 1200, digits: 0, suffix: 'dpi' })),
-        field(t('bleed'), num('bleed', { step: 0.5, min: 0, max: 5, suffix: 'mm' })),
+        field(t('bleed'), num('bleed', { step: 0.5, min: minBleed(), max: 5, suffix: 'mm' })),
         field(t('offsetX'), num('offsetX', { step: 0.1, suffix: 'mm' })),
         field(t('offsetY'), num('offsetY', { step: 0.1, suffix: 'mm' })),
         field(t('scale'), num('scale', { step: 0.5, min: 50, max: 150, suffix: '%' })),
@@ -342,7 +348,7 @@ export function mountPrintView({ root, editor, toast, goPeople, embedded = false
       if (action === 'calib') {
         const cal = calibrationCanvas(doc, st.dpi);
         const pages = st.mode === 'card'
-          ? cardPages([cal], card, { ...st, bleed: 0 })
+          ? cardPages([cal], card, { ...st, bleed: 0, page: page() })
           : sheetPages([cal], null, SHEETS[st.mode], card, { ...st, bleed: 0 });
         await printPages(pages);
         return;
